@@ -19,21 +19,6 @@ public class PuzzleState implements Cloneable {
      */
     public static final int BLOCK = 0;
 
-    /**
-     * The index of the red shoe.
-     */
-    public static final int RED_SHOE = 1;
-
-    /**
-     * The index of the blue shoe.
-     */
-    public static final int BLUE_SHOE = 2;
-
-    /**
-     * The index of the black shoe.
-     */
-    public static final int BLACK_SHOE = 3;
-
     private Position[] positions;
 
     /**
@@ -42,9 +27,9 @@ public class PuzzleState implements Cloneable {
      */
     public PuzzleState() {
         this(new Position(0, 0),
-                new Position(2, 0),
-                new Position(1, 1),
-                new Position(0, 2)
+                new Position(12, 0),
+                new Position(11, 1),
+                new Position(10, 2)
         );
     }
 
@@ -69,9 +54,6 @@ public class PuzzleState implements Cloneable {
                 throw new IllegalArgumentException();
             }
         }
-        if (positions[BLUE_SHOE].equals(positions[BLACK_SHOE])) {
-            throw new IllegalArgumentException();
-        }
     }
 
     /**
@@ -87,7 +69,7 @@ public class PuzzleState implements Cloneable {
      * {@return whether the puzzle is solved}
      */
     public boolean isGoal() {
-        return haveEqualPositions(RED_SHOE, BLUE_SHOE);
+        return positions[BLOCK].equals(new Position(10,13));
     }
 
     /**
@@ -113,7 +95,7 @@ public class PuzzleState implements Cloneable {
             return false;
         }
         var right = positions[BLOCK].getRight();
-        return isEmpty(right) || (positions[BLACK_SHOE].equals(right) && !haveEqualPositions(BLOCK, BLUE_SHOE));
+        return isEmpty(right);
     }
 
     private boolean canMoveDown() {
@@ -121,13 +103,7 @@ public class PuzzleState implements Cloneable {
             return false;
         }
         var down = positions[BLOCK].getDown();
-        if (isEmpty(down)) {
-            return true;
-        }
-        if (haveEqualPositions(BLACK_SHOE, BLOCK) || positions[BLACK_SHOE].equals(down)) {
-            return false;
-        }
-        return positions[BLUE_SHOE].equals(down) || (positions[RED_SHOE].equals(down) && !haveEqualPositions(BLUE_SHOE, BLOCK));
+        return isEmpty(down);
     }
 
     private boolean canMoveLeft() {
@@ -149,25 +125,19 @@ public class PuzzleState implements Cloneable {
     }
 
     private void moveUp() {
-        if (haveEqualPositions(BLACK_SHOE, BLOCK)) {
-            if (haveEqualPositions(RED_SHOE, BLOCK)) {
-                positions[RED_SHOE].setUp();
-            }
-            positions[BLACK_SHOE].setUp();
-        }
         positions[BLOCK].setUp();
     }
 
     private void moveRight() {
-        move(Direction.RIGHT, RED_SHOE, BLUE_SHOE, BLACK_SHOE);
+        positions[BLOCK].setRight();
     }
 
     private void moveDown() {
-        move(Direction.DOWN, RED_SHOE, BLUE_SHOE, BLACK_SHOE);
+        positions[BLOCK].setDown();
     }
 
     private void moveLeft() {
-        move(Direction.LEFT, RED_SHOE, BLUE_SHOE);
+        positions[BLOCK].setLeft();
     }
 
     /**

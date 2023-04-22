@@ -3,6 +3,7 @@
 }
 
 #grid {
+    -fx-background-image: url("images/map.png");
 }
 
 .square {

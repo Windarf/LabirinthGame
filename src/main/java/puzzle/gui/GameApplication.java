@@ -13,7 +13,7 @@ public class GameApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/ui.fxml"));
-        stage.setTitle("Sliding Puzzle Game");
+        stage.setTitle("Labyrinth Game");
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
