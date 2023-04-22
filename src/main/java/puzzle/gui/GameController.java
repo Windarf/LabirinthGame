@@ -10,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -24,7 +23,6 @@ import puzzle.state.Position;
 import puzzle.state.PuzzleState;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 public class GameController {
 
@@ -34,7 +32,7 @@ public class GameController {
     @FXML
     private TextField numberOfMovesField;
 
-    private ImageView[] pieceViews;
+    private final ImageView pieceViews = new ImageView("/images/blue.png");
 
     private PuzzleState state;
 
@@ -44,7 +42,6 @@ public class GameController {
     @FXML
     private void initialize() {
         createBindings();
-        loadImages();
         populateGrid();
         resetGame();
         registerHandlersAndListeners();
@@ -139,7 +136,6 @@ public class GameController {
             for (var col = 0; col < grid.getColumnCount(); col++) {
                 var square = new StackPane();
                 square.getStyleClass().add("square");
-                square.getStyleClass().add((row + col) % 2 == 0 ? "light": "dark");
                 square.setOnMouseClicked(this::handleMouseClick);
                 grid.add(square, col, row);
             }
@@ -156,42 +152,28 @@ public class GameController {
     }
 
     private void showStateOnGrid() {
-        for (var i = 0; i < 4; i++) {
-            var pos = state.getPosition(i);
-            var pieceView = pieceViews[i];
-            getGridNodeAtPosition(grid, pos)
-                    .ifPresent(node -> ((StackPane) node).getChildren().add(pieceView));
-        }
+
+        var pos = state.getPosition(0);
+        var pieceView = pieceViews;
+        getGridNodeAtPosition(grid, pos)
+                .ifPresent(node -> ((StackPane) node).getChildren().add(pieceView));
     }
 
     private void updateStateOnGrid(PuzzleState oldState, PuzzleState newState) {
-        for (var i = 0; i < 4; i++) {
-            var oldPos = oldState.getPosition(i);
-            var newPos = newState.getPosition(i);
+            var oldPos = oldState.getPosition(0);
+            var newPos = newState.getPosition(0);
             if (!newPos.equals(oldPos)) {
-                Logger.trace("Piece {} has been moved from {} to {}", i, oldPos, newPos);
-                movePieceOnGrid(i, oldPos, newPos);
+                Logger.trace("Piece {} has been moved from {} to {}", 0, oldPos, newPos);
+                movePieceOnGrid(oldPos, newPos);
             }
-        }
     }
 
-    private void movePieceOnGrid(int n, Position from, Position to) {
-        var pieceView = pieceViews[n];
+    private void movePieceOnGrid( Position from, Position to) {
+        var pieceView = pieceViews;
         getGridNodeAtPosition(grid, from)
                 .ifPresent(node -> ((StackPane) node).getChildren().remove(pieceView));
         getGridNodeAtPosition(grid, to)
                 .ifPresent(node -> ((StackPane) node).getChildren().add(pieceView));
-    }
-
-    private void loadImages() {
-        pieceViews = Stream.of("block.png", "red-shoe.png", "blue-shoe.png", "black-shoe.png")
-                .map(s -> "/images/" + s)
-                .peek(s -> Logger.debug("Loading image resource {}", s))
-                .map(s -> {
-                    var image = new Image(s);
-                    return new ImageView(image);
-                })
-                .toArray(ImageView[]::new);
     }
 
     private Optional<Direction> getDirectionFromClickPosition(int row, int col) {

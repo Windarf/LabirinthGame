@@ -16,6 +16,7 @@ public class GameApplication extends Application {
         stage.setTitle("Labyrinth Game");
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -26,7 +26,7 @@ public class PuzzleState implements Cloneable {
      * initial state of the puzzle.
      */
     public PuzzleState() {
-        this(new Position(0, 0),
+        this(new Position(3, 0),
                 new Position(12, 0),
                 new Position(11, 1),
                 new Position(10, 2)
