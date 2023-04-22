@@ -26,7 +26,5 @@ public class MenuController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
-
     }
 }
