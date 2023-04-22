@@ -12,7 +12,7 @@ public class PuzzleState implements Cloneable {
     /**
      * The size of the board.
      */
-    public static final int BOARD_SIZE = 3;
+    public static final int BOARD_SIZE = 14;
 
     /**
      * The index of the block.

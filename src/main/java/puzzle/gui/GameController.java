@@ -147,8 +147,8 @@ public class GameController {
     }
 
     private void clearGrid() {
-        for (var row = 0; row < 3; row++) {
-            for (var col = 0; col < 3; col++) {
+        for (var row = 0; row < 14; row++) {
+            for (var col = 0; col < 14; col++) {
                 getGridNodeAtPosition(grid, row, col)
                         .ifPresent(node -> ((StackPane) node).getChildren().clear());
             }

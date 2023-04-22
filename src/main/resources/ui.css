@@ -5,14 +5,6 @@
 #grid {
 }
 
-.square.light {
-    -fx-background-color: white;
-}
-
-.square.dark {
-    -fx-background-color: #F6F6F6;
-}
-
-.square.light:hover, .square.dark:hover {
-    -fx-background-color: #FAFA33;
+.square {
+    -fx-border-style: solid;
 }
