@@ -1,4 +1,4 @@
-package puzzle.gui;
+package game.gui;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -6,9 +6,11 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -18,9 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import org.tinylog.Logger;
-import puzzle.state.Direction;
-import puzzle.state.Position;
-import puzzle.state.PuzzleState;
+import game.state.Direction;
+import game.state.Position;
+import game.state.PuzzleState;
 
 import java.util.Optional;
 
@@ -31,6 +33,9 @@ public class GameController {
 
     @FXML
     private TextField numberOfMovesField;
+
+    @FXML
+    private Button resetButton;
 
     private final ImageView pieceViews = new ImageView("/images/blue.png");
 
@@ -129,6 +134,13 @@ public class GameController {
             alert.showAndWait();
             resetGame();
         }
+    }
+
+    public void handleResetButton(ActionEvent actionEvent) {
+        Logger.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
+        Logger.info("Resetting game");
+
+        resetGame();
     }
 
     private void populateGrid() {

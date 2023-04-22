@@ -27,7 +27,7 @@
         <maven.surefire.version>3.0.0</maven.surefire.version>
         <jacoco.version>0.8.9</jacoco.version>
         <tinylog.version>2.6.1</tinylog.version>
-        <exec.mainClass>puzzle.gui.Main</exec.mainClass>
+        <exec.mainClass>game.gui.Main</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>

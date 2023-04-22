@@ -1,4 +1,4 @@
-package puzzle.state;
+package game.state;
 
 import java.util.Objects;
 
