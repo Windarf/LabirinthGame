@@ -1,3 +1,8 @@
-# TODO: a title for your project
+# 2.35. Feladat
 
-TODO: a detailed description of your project (must contain at least the original description of the assignment)
+A 40. ábrán levő labirintusban kell elnavigálni a golyót a bal oldali piros 
+mezőről a kijáratot jelentő jobb oldali piros mezőre úgy, hogy a golyóval csak
+előre (azaz az eddigi haladási irányban) haladva, vagy jobbra fordulva egy
+mezőt lehet lépni, és a feketével jelölt falakon sem lehet átmenni.
+
+![Feladat 2.35](/src/main/resources/images/task_map.png "Feladat 2.35")
