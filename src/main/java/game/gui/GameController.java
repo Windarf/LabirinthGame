@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -35,12 +36,10 @@ public class GameController {
 
     @FXML
     private GridPane grid;
-
     @FXML
     private TextField numberOfMovesField;
-
     @FXML
-    private Button resetButton;
+    private Label nameLabel;
 
     private final ImageView pieceViews = new ImageView("/images/blue.png");
 
@@ -59,6 +58,10 @@ public class GameController {
 
     private void createBindings() {
         numberOfMovesField.textProperty().bind(numberOfMoves.asString());
+    }
+
+    public void displayName(String username){
+        nameLabel.setText("Good Luck, " + username + "!");
     }
 
     private void resetGame() {
