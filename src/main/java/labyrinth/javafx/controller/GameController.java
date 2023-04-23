@@ -1,4 +1,4 @@
-package game.gui;
+package labyrinth.javafx.controller;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -25,9 +25,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.tinylog.Logger;
-import game.state.Direction;
-import game.state.Position;
-import game.state.PuzzleState;
+import labyrinth.state.Direction;
+import labyrinth.state.Position;
+import labyrinth.state.PuzzleState;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -180,7 +180,6 @@ public class GameController {
     }
 
     private void showStateOnGrid() {
-
         var pos = state.getPosition(0);
         var pieceView = pieceViews;
         getGridNodeAtPosition(grid, pos)
@@ -223,5 +222,4 @@ public class GameController {
                 .filter(child -> GridPane.getRowIndex(child) == row && GridPane.getColumnIndex(child) == col)
                 .findFirst();
     }
-
 }

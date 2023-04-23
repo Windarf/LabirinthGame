@@ -6,11 +6,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="519.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.MenuController">
+<AnchorPane maxHeight="600.0" maxWidth="500.0" minHeight="600.0" minWidth="500.0" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinth.javafx.controller.MenuController">
    <children>
-      <Button fx:id="startButton" focusTraversable="false" layoutX="195.0" layoutY="260.0" mnemonicParsing="false" onAction="#startGame" prefHeight="50.0" prefWidth="80.0" text="Start" />
-      <Button fx:id="exitButton" focusTraversable="false" layoutX="195.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="80.0" text="Exit" />
+      <Button fx:id="startButton" focusTraversable="false" layoutX="195.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="50.0" prefWidth="80.0" text="Start" />
       <Button fx:id="rulesButton" focusTraversable="false" layoutX="195.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleRulesButton" prefHeight="50.0" prefWidth="80.0" text="Rules" />
+      <Button fx:id="highScoreButton" focusTraversable="false" layoutX="195.0" layoutY="386.0" mnemonicParsing="false" onAction="#handleHighScoreButton" prefHeight="50.0" prefWidth="80.0" text="Highscores" />
+      <Button fx:id="exitButton" focusTraversable="false" layoutX="195.0" layoutY="451.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="80.0" text="Exit" />
       <Label layoutX="119.0" layoutY="56.0" text="Labyrinth Game!">
          <font>
             <Font size="32.0" />

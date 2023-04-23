@@ -1,4 +1,4 @@
-package game.state;
+package labyrinth.state;
 
 import java.util.Arrays;
 import java.util.EnumSet;

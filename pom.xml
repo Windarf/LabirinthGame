@@ -6,7 +6,7 @@
     <groupId>hu.unideb.inf</groupId>
     <artifactId>feladat-2-35</artifactId>
     <version>1.0</version>
-    <description>A labyrinth game where the piece can only move forward and to it's right.</description>
+    <description>A labyrinth labyrinth where the piece can only move forward and to it's right.</description>
     <developers>
         <developer>
             <id>windarf</id>
@@ -27,7 +27,7 @@
         <maven.surefire.version>3.0.0</maven.surefire.version>
         <jacoco.version>0.8.9</jacoco.version>
         <tinylog.version>2.6.1</tinylog.version>
-        <exec.mainClass>game.gui.Main</exec.mainClass>
+        <exec.mainClass>labyrinth.javafx.Main</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -65,6 +65,12 @@
             <artifactId>tinylog-impl</artifactId>
             <version>${tinylog.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>

@@ -1,4 +1,4 @@
-package game.gui;
+package labyrinth.javafx;
 
 import javafx.application.Application;
 

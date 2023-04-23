@@ -1,4 +1,4 @@
-package game.state;
+package labyrinth.state;
 
 /**
  * Represents the four main directions.
