@@ -11,12 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="600.0" maxWidth="500.0" minHeight="600.0" minWidth="500.0" prefHeight="600.0" prefWidth="500.0" stylesheets="@../ui.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinth.javafx.controller.GameController">
     <children>
       <HBox prefHeight="75.0" prefWidth="500.0">
          <children>
-            <Label fx:id="nameLabel" alignment="CENTER" prefHeight="50.0" prefWidth="450.0" text="Good Luck, " textAlignment="CENTER">
+            <Label fx:id="messageLabel" alignment="CENTER" prefHeight="50.0" prefWidth="450.0" text="Good Luck, " textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -64,12 +63,18 @@
             <children>
                 <Label text="Moves:" />
                 <TextField fx:id="numberOfMovesField" alignment="CENTER" editable="false" focusTraversable="false" prefColumnCount="4" prefHeight="33.0" prefWidth="98.0" text="0" />
-                <Button fx:id="resetButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleResetButton" text="Reset" />
-                <Button fx:id="Menu" focusTraversable="false" mnemonicParsing="false" onAction="#handleMenuButton" text="Menu" />
+            <Label text="Time:" />
+            <Label fx:id="stopwatchLabel" text="00:00:00" />
             </children>
             <padding>
                 <Insets top="10.0" />
             </padding>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+                <Button fx:id="giveUpFinishButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleGiveUpFinishButton" text="Give up" />
+                <Button fx:id="resetButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleResetButton" text="Reset" />
+         </children>
       </HBox>
     </children>
    <padding>

@@ -18,5 +18,6 @@
          </font>
       </Label>
       <TextField fx:id="usernameTextField" focusTraversable="false" layoutX="161.0" layoutY="217.0" promptText="Username" />
+      <Button fx:id="loadButton" focusTraversable="false" layoutX="302.0" layoutY="386.0" mnemonicParsing="false" onAction="#loadScoreboardAction" prefHeight="50.0" prefWidth="80.0" text="Load" />
    </children>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package labyrinth.javafx.controller;
 
+import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -10,9 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -24,22 +22,44 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import labyrinth.results.GameResult;
+import labyrinth.results.GameResultRepository;
+import labyrinth.util.javafx.ControllerHelper;
+import labyrinth.util.javafx.Stopwatch;
+import lombok.NonNull;
+import lombok.Setter;
 import org.tinylog.Logger;
 import labyrinth.state.Direction;
 import labyrinth.state.Position;
 import labyrinth.state.PuzzleState;
 
+import javax.inject.Inject;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 
 public class GameController {
 
     @FXML
+    private Label messageLabel;
+    @FXML
     private GridPane grid;
     @FXML
     private TextField numberOfMovesField;
     @FXML
-    private Label nameLabel;
+    private Button resetButton;
+    @FXML
+    private Button giveUpFinishButton;
+    @FXML
+    private Label stopwatchLabel;
+    @Inject
+    private FXMLLoader fxmlLoader;
+    @Inject
+    private GameResultRepository gameResultRepository;
+    @Setter
+    private String playerName;
 
     private final ImageView pieceViews = new ImageView("/images/blue.png");
 
@@ -48,26 +68,34 @@ public class GameController {
     private IntegerProperty numberOfMoves = new SimpleIntegerProperty();
     private BooleanProperty gameOver = new SimpleBooleanProperty();
 
+    private Stopwatch stopwatch = new Stopwatch();
+    private Instant startTime;
+
     @FXML
     private void initialize() {
         createBindings();
+        stopwatchLabel.textProperty().bind(stopwatch.hhmmssProperty());
         populateGrid();
-        resetGame();
+        Platform.runLater(() -> messageLabel.setText(String.format("Good luck, %s!", playerName)));
         registerHandlersAndListeners();
+        resetGame();
     }
 
     private void createBindings() {
         numberOfMovesField.textProperty().bind(numberOfMoves.asString());
     }
 
-    public void displayName(String username){
-        nameLabel.setText("Good Luck, " + username + "!");
-    }
-
     private void resetGame() {
         state = new PuzzleState();
         numberOfMoves.set(0);
         gameOver.set(state.isGoal());
+
+        startTime = Instant.now();
+        if (stopwatch.getStatus() == Animation.Status.PAUSED) {
+            stopwatch.reset();
+        }
+        stopwatch.start();
+
         clearGrid();
         showStateOnGrid();
     }
@@ -78,10 +106,8 @@ public class GameController {
     }
 
     private void registerKeyEventHandler() {
-        KeyCombination restartKeyCombination = new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN);
-        KeyCombination quitKeyCombination = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
-        // Must use Platform.runLater() because getScene() returns null when
-        // this method is called from initialize()
+        final KeyCombination restartKeyCombination = new KeyCodeCombination(KeyCode.R, KeyCombination.CONTROL_DOWN);
+        final KeyCombination quitKeyCombination = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
         Platform.runLater(() -> grid.getScene().setOnKeyPressed(
                 keyEvent -> {
                     if (restartKeyCombination.match(keyEvent)) {
@@ -134,29 +160,43 @@ public class GameController {
         }
     }
 
-    private void handleGameOver(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+    private void handleGameOver(ObservableValue<? extends Boolean> observableValue, boolean oldValue, boolean newValue) {
         if (newValue) {
-            var alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Game Over");
-            alert.setContentText("Congratulations, you have solved the puzzle!");
-            alert.showAndWait();
-            resetGame();
+            Logger.info("Player {} has solved the game in {} steps", playerName, numberOfMoves.get());
+            stopwatch.stop();
+            messageLabel.setText(String.format("Congratulations, %s!", playerName));
+            resetButton.setDisable(true);
+            giveUpFinishButton.setText("Finish");
         }
+    }
+    public void handleGiveUpFinishButton(@NonNull final ActionEvent actionEvent) throws IOException {
+
+        final var buttonText = ((Button) actionEvent.getSource()).getText();
+        Logger.debug("{} is pressed", buttonText);
+        if (Objects.equals(buttonText, "Give Up")) {
+
+            Logger.info("The game has been given up");
+        }
+
+        Logger.debug("Saving result");
+        gameResultRepository.addOne(createGameResult());
+
+        Logger.debug("Loading HighScoreController");
+        ControllerHelper.loadAndShowFXML(
+                fxmlLoader,
+                "/fxml/highscores.fxml",
+                (Stage) ((Node) actionEvent.getSource()).getScene().getWindow()
+        );
     }
 
     public void handleResetButton(ActionEvent actionEvent) {
         Logger.debug("{} is pressed", ((Button) actionEvent.getSource()).getText());
         Logger.info("Resetting game");
 
-        resetGame();
-    }
-
-    public void handleMenuButton(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/menu.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        state = new PuzzleState();
+        gameOver.set(state.isGoal());
+        clearGrid();
+        showStateOnGrid();
     }
 
     private void populateGrid() {
@@ -221,5 +261,14 @@ public class GameController {
         return gridPane.getChildren().stream()
                 .filter(child -> GridPane.getRowIndex(child) == row && GridPane.getColumnIndex(child) == col)
                 .findFirst();
+    }
+
+    private GameResult createGameResult() {
+        return GameResult.builder()
+                .player(playerName)
+                .solved(state.isGoal())
+                .duration(Duration.between(startTime, Instant.now()))
+                .steps(numberOfMoves.get())
+                .build();
     }
 }

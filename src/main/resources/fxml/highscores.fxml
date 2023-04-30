@@ -12,8 +12,9 @@
     <TableView fx:id="highScoreTable" editable="true" layoutX="25.0" layoutY="74.0" prefHeight="400.0" prefWidth="450.0">
         <columns>
             <TableColumn fx:id="player" minWidth="200.0" prefWidth="200.0" text="Player" />
-            <TableColumn fx:id="steps" minWidth="125.0" prefWidth="125.0" text="Steps" />
-            <TableColumn fx:id="win" minWidth="125.0" prefWidth="125.0" text="Win" />
+            <TableColumn fx:id="steps" minWidth="75.0" prefWidth="75.0" text="Steps" />
+            <TableColumn fx:id="duration" minWidth="75.0" prefWidth="75.0" text="Duration" />
+            <TableColumn fx:id="created" minWidth="100.0" prefWidth="100.0" text="Date"/>
 
         </columns>
     </TableView>
@@ -22,8 +23,9 @@
             <Font size="26.0" />
         </font>
     </Label>
-    <Button fx:id="menu" focusTraversable="false" layoutX="75.0" layoutY="525.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="122.0" onAction="#handleMenuButton" text="Menu" />
-    <Button layoutX="317.0" layoutY="525.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="122.0" text="Save scoreboard" />
+    <Button fx:id="menu" focusTraversable="false" layoutX="25.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="51.0" prefWidth="122.0" text="Menu" />
+    <Button layoutX="189.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleSaveScoreboard" prefHeight="51.0" prefWidth="122.0" text="Save scoreboard" />
+   <Button fx:id="exit" focusTraversable="false" layoutX="353.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="51.0" prefWidth="122.0" text="Exit" />
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>

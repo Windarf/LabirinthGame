@@ -10,12 +10,21 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import labyrinth.results.GameResultRepository;
+import labyrinth.util.javafx.FileChooserHelper;
+import lombok.NonNull;
+import org.tinylog.Logger;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
 public class MenuController {
+    @Inject
+    private FXMLLoader fxmlLoader;
     @FXML
     private TextField usernameTextField;
+    @Inject
+    private GameResultRepository gameResultRepository;
 
     @FXML
     private void initialize() {
@@ -23,22 +32,37 @@ public class MenuController {
     }
 
     public void handleStartButton(ActionEvent actionEvent) throws IOException {
-
-        String username = usernameTextField.getText();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ui.fxml"));
-        Parent root = fxmlLoader.load();
-        GameController gameController = fxmlLoader.getController();
-        gameController.displayName(username);
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/ui.fxml"));
+        Parent root = fxmlLoader.load();
+        fxmlLoader.<GameController>getController().setPlayerName(usernameTextField.getText());
         stage.setScene(new Scene(root));
         stage.show();
+        Logger.info("The user's name is set to {}, loading game scene", usernameTextField.getText());
     }
+
+    public void loadScoreboardAction(
+            @NonNull final ActionEvent actionEvent) {
+
+        FileChooserHelper.show(
+                        true,
+                        (Stage) ((Node) actionEvent.getSource()).getScene().getWindow()
+                )
+                .ifPresent(file -> {
+                    try {
+                        gameResultRepository.loadFromFile(file);
+                    } catch (IOException ex) {
+                        Logger.error(ex.getMessage());
+                    }
+                });
+    }
+
 
     public void handleHighScoreButton(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/highscores.fxml"));
-        Parent root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/highscores.fxml"));
+        Parent root = fxmlLoader.load();
         stage.setScene(new Scene(root));
         stage.show();
     }
