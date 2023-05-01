@@ -7,8 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -46,6 +44,9 @@ public class HighScoreController {
     private TableColumn<GameResult, Integer> steps;
 
     @FXML
+    private TableColumn<GameResult, Duration> solved;
+
+    @FXML
     private TableColumn<GameResult, Duration> duration;
 
     @FXML
@@ -59,6 +60,7 @@ public class HighScoreController {
 
         player.setCellValueFactory(new PropertyValueFactory<>("player"));
         steps.setCellValueFactory(new PropertyValueFactory<>("steps"));
+        solved.setCellValueFactory(new PropertyValueFactory<>("solved"));
         duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
         created.setCellValueFactory(new PropertyValueFactory<>("created"));
 
@@ -75,7 +77,7 @@ public class HighScoreController {
         });
 
         created.setCellFactory(column -> new TableCell<>() {
-            private final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
+            private final DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
 
             @Override
             protected void updateItem(ZonedDateTime item, boolean empty) {

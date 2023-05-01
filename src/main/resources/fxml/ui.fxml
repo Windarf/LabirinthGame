@@ -7,15 +7,16 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="600.0" maxWidth="500.0" minHeight="600.0" minWidth="500.0" prefHeight="600.0" prefWidth="500.0" stylesheets="@../ui.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinth.javafx.controller.GameController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="500.0" stylesheets="@../ui.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinth.javafx.controller.GameController">
     <children>
-      <HBox prefHeight="75.0" prefWidth="500.0">
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="450.0">
          <children>
-            <Label fx:id="messageLabel" alignment="CENTER" prefHeight="50.0" prefWidth="450.0" text="Good Luck, " textAlignment="CENTER">
+            <Label fx:id="messageLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="450.0" text="Good Luck, " textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -59,23 +60,45 @@
             <Insets />
          </VBox.margin>
         </GridPane>
-        <HBox alignment="CENTER" prefHeight="75.0" spacing="10.0">
-            <children>
-                <Label text="Moves:" />
-                <TextField fx:id="numberOfMovesField" alignment="CENTER" editable="false" focusTraversable="false" prefColumnCount="4" prefHeight="33.0" prefWidth="98.0" text="0" />
-            <Label text="Time:" />
-            <Label fx:id="stopwatchLabel" text="00:00:00" />
-            </children>
-            <padding>
-                <Insets top="10.0" />
-            </padding>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="450.0">
          <children>
-                <Button fx:id="giveUpFinishButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleGiveUpFinishButton" text="Give up" />
-                <Button fx:id="resetButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleResetButton" text="Reset" />
+                <Label alignment="CENTER" layoutY="17.0" text="Moves:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+                <TextField fx:id="numberOfMovesField" alignment="CENTER" editable="false" focusTraversable="false" layoutX="73.0" layoutY="17.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefColumnCount="4" prefHeight="30.0" prefWidth="73.0" text="0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+                <Button fx:id="resetButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="40.0" prefWidth="150.0" text="Reset">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" layoutX="2.0" layoutY="72.0" text="Time:">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="stopwatchLabel" alignment="CENTER" layoutX="73.0" layoutY="72.0" text="00:00:00">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+                <Button fx:id="giveUpFinishButton" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" layoutX="300.0" layoutY="65.0" mnemonicParsing="false" onAction="#handleGiveUpFinishButton" prefHeight="40.0" prefWidth="150.0" text="Give up">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
          </children>
-      </HBox>
+      </Pane>
     </children>
    <padding>
       <Insets bottom="10.0" left="25.0" right="25.0" top="10.0" />

@@ -30,7 +30,7 @@ public abstract class FileSystemRepository<T>
     }
 
     /**
-     * {@return the list of objects}
+     * {@return the set of objects}
      */
     public Set<T> getAll() {
         return new HashSet<>(elements);
@@ -63,7 +63,7 @@ public abstract class FileSystemRepository<T>
     }
 
     /**
-     * Replaces an element of the repository if it already exists. Otherwise adds an element to the repository.
+     * Replaces an element of the repository if it already exists. Otherwise, adds an element to the repository.
      *
      * @param element the element to be replaced
      * @return the view of the updated repository

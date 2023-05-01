@@ -7,8 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import labyrinth.results.GameResultRepository;
 import labyrinth.util.javafx.FileChooserHelper;
@@ -32,6 +31,7 @@ public class MenuController {
     }
 
     public void handleStartButton(ActionEvent actionEvent) throws IOException {
+        handleRulesButton();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         fxmlLoader.setLocation(getClass().getResource("/fxml/ui.fxml"));
         Parent root = fxmlLoader.load();
@@ -42,7 +42,7 @@ public class MenuController {
     }
 
     public void loadScoreboardAction(
-            @NonNull final ActionEvent actionEvent) {
+            @NonNull final ActionEvent actionEvent) throws IOException {
 
         FileChooserHelper.show(
                         true,
@@ -55,10 +55,6 @@ public class MenuController {
                         Logger.error(ex.getMessage());
                     }
                 });
-    }
-
-
-    public void handleHighScoreButton(ActionEvent actionEvent) throws IOException {
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         fxmlLoader.setLocation(getClass().getResource("/fxml/highscores.fxml"));
@@ -69,8 +65,15 @@ public class MenuController {
 
     public void handleRulesButton(){
         var alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Rules");
-        alert.setContentText("Your goal is to reach the green field at the right side! You can only move forward and to your right! ");
+        alert.setTitle("Rules");
+        alert.setHeaderText("Rules and Controls");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setContent(new Label("""
+                Your goal is to reach the green field at the right side!\s
+                However you can only move forward and to your right!
+                You can control the game with the keyboard arrows or by clicking with the mouse!\s
+                """));
+        dialogPane.getContent().setStyle("-fx-font-size: 18px;");
         alert.showAndWait();
     }
 

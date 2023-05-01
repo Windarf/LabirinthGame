@@ -170,7 +170,6 @@ public class GameController {
         }
     }
     public void handleGiveUpFinishButton(@NonNull final ActionEvent actionEvent) throws IOException {
-
         final var buttonText = ((Button) actionEvent.getSource()).getText();
         Logger.debug("{} is pressed", buttonText);
         if (Objects.equals(buttonText, "Give Up")) {

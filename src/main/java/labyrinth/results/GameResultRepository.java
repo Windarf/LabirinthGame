@@ -40,9 +40,9 @@ public class GameResultRepository extends FileSystemRepository<GameResult> {
             final int n) {
 
         return getAll().stream()
-                .filter(GameResult::isSolved)
-                .sorted(Comparator.comparing(GameResult::getDuration)
-                        .thenComparing(GameResult::getCreated, Comparator.reverseOrder()))
+                .sorted(Comparator.comparing(GameResult::isSolved, Comparator.reverseOrder())
+                        .thenComparing(GameResult::getSteps)
+                        .thenComparing(GameResult::getDuration))
                 .limit(n)
                 .toList();
     }
