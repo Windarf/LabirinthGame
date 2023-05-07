@@ -19,11 +19,25 @@ public class PuzzleState implements Cloneable {
      */
     public static final int BLOCK = 0;
 
-    public static Position oldpos2 = new Position(3,-2);
-    public static Position oldpos = new Position(3,-1);
-    public static Position currpos = new Position(3,0);
+    /**
+     * The index of 2nd latest position of the BLOCK.
+     */
+    public static Position olderPosition = new Position(3,-2);
+    /**
+     * The index of the latest position of the BLOCK
+     */
+    public static Position oldPosition = new Position(3,-1);
+    /**
+     * The index of the current position of the BLOCK. It used for the rules.
+     */
+    public static Position currentPosition = new Position(3,0);
+    /**
+     * The index of the GOAL.
+     */
     public static final Position GOAL = new Position(10,13);
-
+    /**
+     * An array to store the positions.
+     */
     private Position[] positions;
 
     /**
@@ -79,6 +93,11 @@ public class PuzzleState implements Cloneable {
         this.positions = deepClone(positions);
     }
 
+    /**
+     * Check whether the initial positions are in the board.
+     * @param positions an array of positions to check.
+     * @throws IllegalArgumentException if any of the postions are not on the board.
+     */
     private void checkPositions(Position[] positions) {
         for (var position : positions) {
             if (!isOnBoard(position)) {
@@ -103,10 +122,13 @@ public class PuzzleState implements Cloneable {
         return positions[BLOCK].equals(GOAL);
     }
 
+    /**
+     * Resets the positions of the step tracking variables.
+     */
     public void resetOldPos(){
-        oldpos2 = new Position(3,-2);
-        oldpos = new Position(3,-1);
-        currpos = new Position(3,0);
+        olderPosition = new Position(3,-2);
+        oldPosition = new Position(3,-1);
+        currentPosition = new Position(3,0);
     }
 
     /**
@@ -126,17 +148,17 @@ public class PuzzleState implements Cloneable {
     private boolean canMoveUp() {
 
         if (positions[BLOCK].row() > 1 && isEmpty(positions[BLOCK].getUp())) {
-            var tmp = oldpos.clone();
-            var tmp2 = oldpos2.clone();
-            oldpos2 = oldpos.clone();
-            oldpos = currpos.clone();
+            var tmp = oldPosition.clone();
+            var tmp2 = olderPosition.clone();
+            olderPosition = oldPosition.clone();
+            oldPosition = currentPosition.clone();
 
-            if (oldpos2.getUp().equals(oldpos) || oldpos2.getLeft().equals(oldpos)) {
-                currpos = positions[BLOCK].getUp();
+            if (olderPosition.getUp().equals(oldPosition) || olderPosition.getLeft().equals(oldPosition)) {
+                currentPosition = positions[BLOCK].getUp();
                 return isEmpty(positions[BLOCK].getUp());
             }
-            oldpos2 = tmp2.clone();
-            oldpos = tmp.clone();
+            olderPosition = tmp2.clone();
+            oldPosition = tmp.clone();
         }
         return false;
     }
@@ -150,17 +172,17 @@ public class PuzzleState implements Cloneable {
         }
 
         if (isEmpty(positions[BLOCK].getRight())) {
-            var tmp = oldpos.clone();
-            var tmp2 = oldpos2.clone();
-            oldpos2 = oldpos.clone();
-            oldpos = currpos.clone();
+            var tmp = oldPosition.clone();
+            var tmp2 = olderPosition.clone();
+            olderPosition = oldPosition.clone();
+            oldPosition = currentPosition.clone();
 
-            if (oldpos2.getRight().equals(oldpos) || oldpos2.getUp().equals(oldpos)) {
-                currpos = positions[BLOCK].getRight();
+            if (olderPosition.getRight().equals(oldPosition) || olderPosition.getUp().equals(oldPosition)) {
+                currentPosition = positions[BLOCK].getRight();
                 return isEmpty(positions[BLOCK].getRight());
             }
-            oldpos2 = tmp2.clone();
-            oldpos = tmp.clone();
+            olderPosition = tmp2.clone();
+            oldPosition = tmp.clone();
         }
         return false;
     }
@@ -170,17 +192,17 @@ public class PuzzleState implements Cloneable {
             return false;
         }
         if (isEmpty(positions[BLOCK].getDown())) {
-            var tmp = oldpos.clone();
-            var tmp2 = oldpos2.clone();
-            oldpos2 = oldpos.clone();
-            oldpos = currpos.clone();
+            var tmp = oldPosition.clone();
+            var tmp2 = olderPosition.clone();
+            olderPosition = oldPosition.clone();
+            oldPosition = currentPosition.clone();
 
-            if (oldpos2.getDown().equals(oldpos) || oldpos2.getRight().equals(oldpos)) {
-                currpos = positions[BLOCK].getDown();
+            if (olderPosition.getDown().equals(oldPosition) || olderPosition.getRight().equals(oldPosition)) {
+                currentPosition = positions[BLOCK].getDown();
                 return isEmpty(positions[BLOCK].getDown());
             }
-            oldpos2 = tmp2.clone();
-            oldpos = tmp.clone();
+            olderPosition = tmp2.clone();
+            oldPosition = tmp.clone();
         }
         return false;
     }
@@ -188,17 +210,17 @@ public class PuzzleState implements Cloneable {
     private boolean canMoveLeft() {
 
         if (positions[BLOCK].col() > 1 && isEmpty(positions[BLOCK].getLeft())) {
-            var tmp = oldpos.clone();
-            var tmp2 = oldpos2.clone();
-            oldpos2 = oldpos.clone();
-            oldpos = currpos.clone();
+            var tmp = oldPosition.clone();
+            var tmp2 = olderPosition.clone();
+            olderPosition = oldPosition.clone();
+            oldPosition = currentPosition.clone();
 
-            if (oldpos2.getLeft().equals(oldpos) || oldpos2.getDown().equals(oldpos)) {
-                currpos = positions[BLOCK].getLeft();
+            if (olderPosition.getLeft().equals(oldPosition) || olderPosition.getDown().equals(oldPosition)) {
+                currentPosition = positions[BLOCK].getLeft();
                 return isEmpty(positions[BLOCK].getLeft());
             }
-            oldpos2 = tmp2.clone();
-            oldpos = tmp.clone();
+            olderPosition = tmp2.clone();
+            oldPosition = tmp.clone();
         }
         return false;
     }

@@ -6,7 +6,7 @@
     <groupId>hu.unideb.inf</groupId>
     <artifactId>feladat-2-35</artifactId>
     <version>1.0</version>
-    <description>A labyrinth labyrinth where the piece can only move forward and to it's right.</description>
+    <description>A labyrinth game where the piece can only move forward and to it's right.</description>
     <developers>
         <developer>
             <id>windarf</id>
