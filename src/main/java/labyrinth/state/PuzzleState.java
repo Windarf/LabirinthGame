@@ -28,10 +28,6 @@ public class PuzzleState implements Cloneable {
      */
     public static Position oldPosition = new Position(3,-1);
     /**
-     * The index of the current position of the BLOCK. It used for the rules.
-     */
-    public static Position currentPosition = new Position(3,0);
-    /**
      * The index of the GOAL.
      */
     public static final Position GOAL = new Position(10,13);
@@ -46,7 +42,6 @@ public class PuzzleState implements Cloneable {
      */
     public PuzzleState() {
         this(new Position(3, 0),
-                new Position(3, 0),
                 new Position(1, 1),
                 new Position(1, 7),
                 new Position(1, 12),
@@ -84,7 +79,7 @@ public class PuzzleState implements Cloneable {
     /**
      * Creates a {@code PuzzleState} object initializing the positions of the
      * pieces with the positions specified. The constructor expects an array of
-     * four {@code Position} objects or four {@code Position} objects.
+     * {@code Position} objects or {@code Position} objects.
      *
      * @param positions the initial positions of the pieces
      */
@@ -96,7 +91,7 @@ public class PuzzleState implements Cloneable {
     /**
      * Check whether the initial positions are in the board.
      * @param positions an array of positions to check.
-     * @throws IllegalArgumentException if any of the postions are not on the board.
+     * @throws IllegalArgumentException if any of the positions are not on the board.
      */
     private void checkPositions(Position[] positions) {
         for (var position : positions) {
@@ -128,7 +123,6 @@ public class PuzzleState implements Cloneable {
     public void resetOldPos(){
         olderPosition = new Position(3,-2);
         oldPosition = new Position(3,-1);
-        currentPosition = new Position(3,0);
     }
 
     /**
@@ -151,10 +145,9 @@ public class PuzzleState implements Cloneable {
             var tmp = oldPosition.clone();
             var tmp2 = olderPosition.clone();
             olderPosition = oldPosition.clone();
-            oldPosition = currentPosition.clone();
+            oldPosition = positions[BLOCK].clone();
 
             if (olderPosition.getUp().equals(oldPosition) || olderPosition.getLeft().equals(oldPosition)) {
-                currentPosition = positions[BLOCK].getUp();
                 return isEmpty(positions[BLOCK].getUp());
             }
             olderPosition = tmp2.clone();
@@ -175,10 +168,9 @@ public class PuzzleState implements Cloneable {
             var tmp = oldPosition.clone();
             var tmp2 = olderPosition.clone();
             olderPosition = oldPosition.clone();
-            oldPosition = currentPosition.clone();
+            oldPosition = positions[BLOCK].clone();
 
             if (olderPosition.getRight().equals(oldPosition) || olderPosition.getUp().equals(oldPosition)) {
-                currentPosition = positions[BLOCK].getRight();
                 return isEmpty(positions[BLOCK].getRight());
             }
             olderPosition = tmp2.clone();
@@ -195,10 +187,9 @@ public class PuzzleState implements Cloneable {
             var tmp = oldPosition.clone();
             var tmp2 = olderPosition.clone();
             olderPosition = oldPosition.clone();
-            oldPosition = currentPosition.clone();
+            oldPosition = positions[BLOCK].clone();
 
             if (olderPosition.getDown().equals(oldPosition) || olderPosition.getRight().equals(oldPosition)) {
-                currentPosition = positions[BLOCK].getDown();
                 return isEmpty(positions[BLOCK].getDown());
             }
             olderPosition = tmp2.clone();
@@ -213,10 +204,9 @@ public class PuzzleState implements Cloneable {
             var tmp = oldPosition.clone();
             var tmp2 = olderPosition.clone();
             olderPosition = oldPosition.clone();
-            oldPosition = currentPosition.clone();
+            oldPosition = positions[BLOCK].clone();
 
             if (olderPosition.getLeft().equals(oldPosition) || olderPosition.getDown().equals(oldPosition)) {
-                currentPosition = positions[BLOCK].getLeft();
                 return isEmpty(positions[BLOCK].getLeft());
             }
             olderPosition = tmp2.clone();

@@ -78,14 +78,14 @@ public class GameController {
         populateGrid();
         Platform.runLater(() -> messageLabel.setText(String.format("Good luck, %s!", playerName)));
         registerHandlersAndListeners();
-        resetGame();
+        startGame();
     }
 
     private void createBindings() {
         numberOfMovesField.textProperty().bind(numberOfMoves.asString());
     }
 
-    private void resetGame() {
+    private void startGame() {
         state = new PuzzleState();
         numberOfMoves.set(0);
         gameOver.set(state.isGoal());
@@ -112,7 +112,7 @@ public class GameController {
                 keyEvent -> {
                     if (restartKeyCombination.match(keyEvent)) {
                         Logger.debug("Restarting game...");
-                        resetGame();
+                        startGame();
                     } else if (quitKeyCombination.match(keyEvent)) {
                         Logger.debug("Exiting...");
                         Platform.exit();
