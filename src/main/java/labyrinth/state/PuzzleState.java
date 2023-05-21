@@ -50,6 +50,7 @@ public class PuzzleState implements Cloneable {
                 new Position(2, 9),
                 new Position(3, 3),
                 new Position(3, 9),
+                new Position(4,0),
                 new Position(4, 4),
                 new Position(4, 10),
                 new Position(5, 1),

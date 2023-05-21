@@ -67,9 +67,9 @@ public class GameController {
 
     private IntegerProperty numberOfMoves = new SimpleIntegerProperty();
     private BooleanProperty gameOver = new SimpleBooleanProperty();
-
     private Stopwatch stopwatch = new Stopwatch();
     private Instant startTime;
+    private Instant finishTime;
 
     @FXML
     private void initialize() {
@@ -164,9 +164,13 @@ public class GameController {
         if (newValue) {
             Logger.info("Player {} has solved the game in {} steps", playerName, numberOfMoves.get());
             stopwatch.stop();
+            finishTime = Instant.now();
             messageLabel.setText(String.format("Congratulations, %s!", playerName));
             resetButton.setDisable(true);
             giveUpFinishButton.setText("Finish");
+
+            disableControls();
+            unregisterKeyEventHandler();
         }
     }
     public void handleGiveUpFinishButton(@NonNull final ActionEvent actionEvent) throws IOException {
@@ -196,6 +200,12 @@ public class GameController {
         gameOver.set(state.isGoal());
         clearGrid();
         showStateOnGrid();
+    }
+    private void disableControls() {
+        grid.setDisable(true);
+    }
+    private void unregisterKeyEventHandler() {
+        grid.getScene().setOnKeyPressed(null);
     }
 
     private void populateGrid() {
@@ -247,7 +257,7 @@ public class GameController {
         Direction direction = null;
         try {
             direction = Direction.of(row - blockPos.row(), col - blockPos.col());
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
         }
         return Optional.ofNullable(direction);
     }
@@ -263,10 +273,16 @@ public class GameController {
     }
 
     private GameResult createGameResult() {
+        Duration duration;
+        if (gameOver.get()) {
+            duration = Duration.between(startTime, finishTime);
+        } else {
+            duration = Duration.between(startTime, Instant.now());
+        }
         return GameResult.builder()
                 .player(playerName)
                 .solved(state.isGoal())
-                .duration(Duration.between(startTime, Instant.now()))
+                .duration(duration)
                 .steps(numberOfMoves.get())
                 .build();
     }
