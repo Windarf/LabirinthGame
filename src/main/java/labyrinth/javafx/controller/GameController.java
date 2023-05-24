@@ -65,9 +65,9 @@ public class GameController {
 
     private PuzzleState state;
 
-    private IntegerProperty numberOfMoves = new SimpleIntegerProperty();
-    private BooleanProperty gameOver = new SimpleBooleanProperty();
-    private Stopwatch stopwatch = new Stopwatch();
+    private final IntegerProperty numberOfMoves = new SimpleIntegerProperty();
+    private final BooleanProperty gameOver = new SimpleBooleanProperty();
+    private final Stopwatch stopwatch = new Stopwatch();
     private Instant startTime;
     private Instant finishTime;
 

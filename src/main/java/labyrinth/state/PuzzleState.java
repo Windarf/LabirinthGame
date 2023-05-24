@@ -2,7 +2,6 @@ package labyrinth.state;
 
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.StringJoiner;
 
 /**
  * Represents the state of the puzzle.
@@ -20,14 +19,6 @@ public class PuzzleState implements Cloneable {
     public static final int BLOCK = 0;
 
     /**
-     * The index of 2nd latest position of the BLOCK.
-     */
-    public static Position olderPosition = new Position(3,-2);
-    /**
-     * The index of the latest position of the BLOCK
-     */
-    public static Position oldPosition = new Position(3,-1);
-    /**
      * The index of the GOAL.
      */
     public static final Position GOAL = new Position(10,13);
@@ -35,6 +26,7 @@ public class PuzzleState implements Cloneable {
      * An array to store the positions.
      */
     private Position[] positions;
+    private Position previousPosition;
 
     /**
      * Creates a {@code PuzzleState} object that corresponds to the original
@@ -74,7 +66,7 @@ public class PuzzleState implements Cloneable {
                 new Position(11, 9),
                 new Position(12, 1),
                 new Position(12, 12));
-        resetOldPos();
+        previousPosition = new Position(positions[BLOCK].row(),positions[BLOCK].col()-1);
     }
 
     /**
@@ -119,14 +111,6 @@ public class PuzzleState implements Cloneable {
     }
 
     /**
-     * Resets the positions of the step tracking variables.
-     */
-    public void resetOldPos(){
-        olderPosition = new Position(3,-2);
-        oldPosition = new Position(3,-1);
-    }
-
-    /**
      * {@return whether the block can be moved to the direction specified}
      *
      * @param direction a direction to which the block is intended to be moved
@@ -142,17 +126,14 @@ public class PuzzleState implements Cloneable {
 
     private boolean canMoveUp() {
 
-        if (positions[BLOCK].row() > 1 && isEmpty(positions[BLOCK].getUp())) {
-            var tmp = oldPosition.clone();
-            var tmp2 = olderPosition.clone();
-            olderPosition = oldPosition.clone();
-            oldPosition = positions[BLOCK].clone();
+        if (positions[BLOCK].row() > 1 && isEmpty(positions[BLOCK].getUp()) && !isGoal()) {
 
-            if (olderPosition.getUp().equals(oldPosition) || olderPosition.getLeft().equals(oldPosition)) {
+            Position currentPos = positions[BLOCK];
+            Position previousPos = getPreviousPosition();
+
+            if (previousPos.getUp().equals(currentPos) || previousPos.getLeft().equals(currentPos)) {
                 return isEmpty(positions[BLOCK].getUp());
             }
-            olderPosition = tmp2.clone();
-            oldPosition = tmp.clone();
         }
         return false;
     }
@@ -160,58 +141,49 @@ public class PuzzleState implements Cloneable {
     private boolean canMoveRight() {
 
         if (!positions[BLOCK].getRight().equals(GOAL)){
-            if (positions[BLOCK].col() == BOARD_SIZE - 2) {
+            if (positions[BLOCK].col() == BOARD_SIZE - 2 || isGoal()) {
                 return false;
             }
         }
 
         if (isEmpty(positions[BLOCK].getRight())) {
-            var tmp = oldPosition.clone();
-            var tmp2 = olderPosition.clone();
-            olderPosition = oldPosition.clone();
-            oldPosition = positions[BLOCK].clone();
 
-            if (olderPosition.getRight().equals(oldPosition) || olderPosition.getUp().equals(oldPosition)) {
+            Position currentPos = positions[BLOCK];
+            Position previousPos = getPreviousPosition();
+
+            if (previousPos.getRight().equals(currentPos) || previousPos.getUp().equals(currentPos)) {
                 return isEmpty(positions[BLOCK].getRight());
             }
-            olderPosition = tmp2.clone();
-            oldPosition = tmp.clone();
         }
         return false;
     }
 
     private boolean canMoveDown() {
-        if (positions[BLOCK].row() == BOARD_SIZE - 2) {
+        if (positions[BLOCK].row() == BOARD_SIZE - 2 || isGoal()) {
             return false;
         }
         if (isEmpty(positions[BLOCK].getDown())) {
-            var tmp = oldPosition.clone();
-            var tmp2 = olderPosition.clone();
-            olderPosition = oldPosition.clone();
-            oldPosition = positions[BLOCK].clone();
 
-            if (olderPosition.getDown().equals(oldPosition) || olderPosition.getRight().equals(oldPosition)) {
+            Position currentPos = positions[BLOCK];
+            Position previousPos = getPreviousPosition();
+
+            if (previousPos.getDown().equals(currentPos) || previousPos.getRight().equals(currentPos)) {
                 return isEmpty(positions[BLOCK].getDown());
             }
-            olderPosition = tmp2.clone();
-            oldPosition = tmp.clone();
         }
         return false;
     }
 
     private boolean canMoveLeft() {
 
-        if (positions[BLOCK].col() > 1 && isEmpty(positions[BLOCK].getLeft())) {
-            var tmp = oldPosition.clone();
-            var tmp2 = olderPosition.clone();
-            olderPosition = oldPosition.clone();
-            oldPosition = positions[BLOCK].clone();
+        if (positions[BLOCK].col() > 1 && isEmpty(positions[BLOCK].getLeft()) && !isGoal()) {
 
-            if (olderPosition.getLeft().equals(oldPosition) || olderPosition.getDown().equals(oldPosition)) {
+            Position currentPos = positions[BLOCK];
+            Position previousPos = getPreviousPosition();
+
+            if (previousPos.getLeft().equals(currentPos) || previousPos.getDown().equals(currentPos)) {
                 return isEmpty(positions[BLOCK].getLeft());
             }
-            olderPosition = tmp2.clone();
-            oldPosition = tmp.clone();
         }
         return false;
     }
@@ -222,12 +194,22 @@ public class PuzzleState implements Cloneable {
      * @param direction the direction to which the block is moved
      */
     public void move(Direction direction) {
-        switch (direction) {
-            case UP -> moveUp();
-            case RIGHT -> moveRight();
-            case DOWN -> moveDown();
-            case LEFT -> moveLeft();
+        if (canMove(direction)) {
+            previousPosition = positions[BLOCK].clone();
+            switch (direction) {
+                case UP -> moveUp();
+                case RIGHT -> moveRight();
+                case DOWN -> moveDown();
+                case LEFT -> moveLeft();
+            }
         }
+    }
+    public Position getPreviousPosition() {
+        return previousPosition.clone();
+    }
+
+    public void setPreviousPosition(Position previousPosition) {
+        this.previousPosition = previousPosition;
     }
 
     private void moveUp() {
@@ -264,7 +246,7 @@ public class PuzzleState implements Cloneable {
                 position.col() >= 0 && position.col() < BOARD_SIZE;
     }
 
-    private boolean isEmpty(Position position) {
+    boolean isEmpty(Position position) {
         for (var p : positions) {
             if (p.equals(position)) {
                 return false;
@@ -300,11 +282,7 @@ public class PuzzleState implements Cloneable {
 
     @Override
     public String toString() {
-        var sj = new StringJoiner(",", "[", "]");
-        for (var position : positions) {
-           sj.add(position.toString());
-        }
-        return sj.toString();
+        return positions[BLOCK].toString();
     }
 
     private static Position[] deepClone(Position[] a) {
