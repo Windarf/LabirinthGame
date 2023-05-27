@@ -6,11 +6,10 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import labyrinth.results.GameResultRepository;
+import labyrinth.util.javafx.ControllerHelper;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -34,14 +33,13 @@ public class GameApplication extends Application {
     public void start(Stage stage) throws IOException {
         Logger.info("Starting application");
         context.init();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/menu.fxml"));
-        Parent root = fxmlLoader.load();
         stage.setTitle("Labyrinth Game");
-        stage.setResizable(false);
         Image icon = new Image("/images/icon.png");
         stage.getIcons().add(icon);
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.setResizable(false);
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/menu.fxml", stage);
+
+
     }
 
 }

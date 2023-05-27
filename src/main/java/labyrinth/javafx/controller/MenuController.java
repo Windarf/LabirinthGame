@@ -5,11 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import labyrinth.results.GameResultRepository;
+import labyrinth.util.javafx.ControllerHelper;
 import labyrinth.util.javafx.FileChooserHelper;
 import lombok.NonNull;
 import org.tinylog.Logger;
@@ -33,11 +32,8 @@ public class MenuController {
     public void handleStartButton(ActionEvent actionEvent) throws IOException {
         handleRulesButton();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/ui.fxml"));
-        Parent root = fxmlLoader.load();
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/ui.fxml", stage);
         fxmlLoader.<GameController>getController().setPlayerName(usernameTextField.getText());
-        stage.setScene(new Scene(root));
-        stage.show();
         Logger.info("The user's name is set to {}, loading game scene", usernameTextField.getText());
     }
 
@@ -57,10 +53,7 @@ public class MenuController {
                 });
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/highscores.fxml"));
-        Parent root = fxmlLoader.load();
-        stage.setScene(new Scene(root));
-        stage.show();
+        ControllerHelper.loadAndShowFXML(fxmlLoader, "/fxml/highscores.fxml", stage);
     }
 
     public void handleRulesButton(){

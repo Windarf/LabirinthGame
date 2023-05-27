@@ -1,8 +1,11 @@
 package labyrinth.state;
 
+import lombok.Getter;
+
 /**
  * Represents the four main directions.
  */
+@Getter
 public enum Direction {
 
     UP(-1, 0),
@@ -16,22 +19,6 @@ public enum Direction {
     Direction(int rowChange, int colChange) {
         this.rowChange = rowChange;
         this.colChange = colChange;
-    }
-
-    /**
-     * {@return the change in the row coordinate when moving to the
-     * direction}
-     */
-    public int getRowChange() {
-        return rowChange;
-    }
-
-    /**
-     * {@return the change in the column coordinate when moving to the
-     * direction}
-     */
-    public int getColChange() {
-        return colChange;
     }
 
     /**

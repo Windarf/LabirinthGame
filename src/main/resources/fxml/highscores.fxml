@@ -24,7 +24,7 @@
             <Font size="26.0" />
         </font>
     </Label>
-    <Button fx:id="menu" focusTraversable="false" layoutX="25.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="140.0" text="Menu">
+    <Button focusTraversable="false" layoutX="25.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleMenuButton" prefHeight="50.0" prefWidth="140.0" text="Menu">
       <font>
          <Font size="16.0" />
       </font></Button>
@@ -32,7 +32,7 @@
       <font>
          <Font size="16.0" />
       </font></Button>
-   <Button fx:id="exit" focusTraversable="false" layoutX="335.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="140.0" text="Exit">
+   <Button focusTraversable="false" layoutX="335.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="140.0" text="Exit">
       <font>
          <Font size="16.0" />
       </font></Button>

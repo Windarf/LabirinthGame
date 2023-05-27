@@ -141,10 +141,6 @@ public class PuzzleStateTest {
 
     }
 
-
-
-
-
     @Test
     void testEquals() {
         assertTrue(originalState.equals(originalState));

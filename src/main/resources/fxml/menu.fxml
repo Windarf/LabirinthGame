@@ -6,34 +6,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="625.0" maxWidth="500.0" minHeight="625.0" minWidth="500.0" prefHeight="625.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="labyrinth.javafx.controller.MenuController">
-   <children>
-      <Button fx:id="startButton" focusTraversable="false" layoutX="150.0" layoutY="290.0" mnemonicParsing="false" onAction="#handleStartButton" prefHeight="50.0" prefWidth="200.0" text="Start">
-         <font>
-            <Font size="16.0" />
-         </font></Button>
-      <Button fx:id="loadButton" focusTraversable="false" layoutX="150.0" layoutY="370.0" mnemonicParsing="false" onAction="#loadScoreboardAction" prefHeight="50.0" prefWidth="200.0" text="Load Highscores">
-         <font>
-            <Font size="16.0" />
-         </font></Button>
-      <Button fx:id="exitButton" focusTraversable="false" layoutX="150.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="50.0" prefWidth="200.0" text="Exit">
-         <font>
-            <Font size="16.0" />
-         </font></Button>
-      <Label layoutX="134.0" layoutY="54.0" text="Labyrinth Game!">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <TextField fx:id="usernameTextField" focusTraversable="false" layoutX="150.0" layoutY="220.0" prefHeight="40.0" prefWidth="200.0" promptText="Username">
-         <font>
-            <Font size="18.0" />
-         </font></TextField>
+<AnchorPane maxHeight="625.0" maxWidth="500.0" minHeight="625.0" minWidth="500.0" prefHeight="625.0" prefWidth="500.0"
+            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="labyrinth.javafx.controller.MenuController">
+   <Button focusTraversable="false" layoutX="150.0" layoutY="290.0" mnemonicParsing="false"
+           onAction="#handleStartButton" prefHeight="50.0" prefWidth="200.0" text="Start">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+   <Button focusTraversable="false" layoutX="150.0" layoutY="370.0" mnemonicParsing="false"
+           onAction="#loadScoreboardAction" prefHeight="50.0" prefWidth="200.0" text="Load Highscores">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+   <Button focusTraversable="false" layoutX="150.0" layoutY="450.0" mnemonicParsing="false"
+           onAction="#handleExitButton" prefHeight="50.0" prefWidth="200.0" text="Exit">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Button>
+   <Label layoutX="134.0" layoutY="54.0" text="Labyrinth Game!">
+      <font>
+         <Font size="32.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="usernameTextField" focusTraversable="false" layoutX="150.0" layoutY="220.0" prefHeight="40.0"
+              prefWidth="200.0" promptText="Username">
+      <font>
+         <Font size="18.0"/>
+      </font>
+   </TextField>
 
-      <Label alignment="CENTER" layoutX="206.0" layoutY="180.0" text="Username">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-   </children>
+   <Label alignment="CENTER" layoutX="206.0" layoutY="180.0" text="Username">
+      <font>
+         <Font size="20.0"/>
+      </font>
+   </Label>
 </AnchorPane>

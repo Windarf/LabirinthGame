@@ -1,11 +1,16 @@
 package labyrinth.state;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Arrays;
 import java.util.EnumSet;
 
 /**
  * Represents the state of the puzzle.
  */
+@Setter
+@Getter
 public class PuzzleState implements Cloneable {
 
     /**
@@ -203,13 +208,6 @@ public class PuzzleState implements Cloneable {
                 case LEFT -> moveLeft();
             }
         }
-    }
-    public Position getPreviousPosition() {
-        return previousPosition.clone();
-    }
-
-    public void setPreviousPosition(Position previousPosition) {
-        this.previousPosition = previousPosition;
     }
 
     private void moveUp() {
