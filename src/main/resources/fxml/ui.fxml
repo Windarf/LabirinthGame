@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0"
-      prefWidth="500.0" stylesheets="@../ui.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+      prefWidth="500.0" stylesheets="@../css/ui.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="labyrinth.javafx.controller.GameController">
     <padding>
         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0"/>
@@ -29,7 +29,7 @@
         </Label>
     </HBox>
     <GridPane fx:id="grid" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-              minWidth="-Infinity" prefHeight="450.0" prefWidth="450.0" stylesheets="@../ui.css">
+              minWidth="-Infinity" prefHeight="450.0" prefWidth="450.0" stylesheets="@../css/ui.css">
         <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>

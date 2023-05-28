@@ -66,7 +66,8 @@ public class MenuController {
                 However you can only move forward and to your right!
                 You can control the game with the keyboard arrows or by clicking with the mouse!\s
                 """));
-        dialogPane.getContent().setStyle("-fx-font-size: 18px;");
+        dialogPane.getStylesheets().add(getClass().getResource("/css/menu.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog");
         alert.showAndWait();
     }
 

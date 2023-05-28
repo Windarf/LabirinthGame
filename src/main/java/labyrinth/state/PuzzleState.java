@@ -47,7 +47,6 @@ public class PuzzleState implements Cloneable {
                 new Position(2, 9),
                 new Position(3, 3),
                 new Position(3, 9),
-                new Position(4,0),
                 new Position(4, 4),
                 new Position(4, 10),
                 new Position(5, 1),
@@ -164,7 +163,7 @@ public class PuzzleState implements Cloneable {
     }
 
     private boolean canMoveDown() {
-        if (positions[BLOCK].row() == BOARD_SIZE - 2 || isGoal()) {
+        if (positions[BLOCK].row() == BOARD_SIZE - 2 || isGoal() || positions[BLOCK].col() == 0) {
             return false;
         }
         if (isEmpty(positions[BLOCK].getDown())) {
